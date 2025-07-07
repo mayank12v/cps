@@ -1,0 +1,133 @@
+/* Custom styles for CPS Test */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Custom animations */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Button hover effects */
+.time-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.time-btn.active {
+    border-color: #10b981 !important;
+    background-color: rgba(16, 185, 129, 0.2) !important;
+    color: #6ee7b7 !important;
+}
+
+/* Click button effects */
+#clickButton {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+#clickButton:disabled {
+    background: #4b5563 !important;
+    cursor: not-allowed !important;
+    opacity: 0.5 !important;
+}
+
+#clickButton:disabled:hover {
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Gradient text support for older browsers */
+.gradient-text {
+    background: linear-gradient(to right, #a855f7, #c084fc, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
+/* Performance rating colors */
+.rating-legendary {
+    background-color: rgba(147, 51, 234, 0.3);
+    color: #c084fc;
+}
+
+.rating-excellent {
+    background-color: rgba(16, 185, 129, 0.3);
+    color: #6ee7b7;
+}
+
+.rating-very-good {
+    background-color: rgba(59, 130, 246, 0.3);
+    color: #93c5fd;
+}
+
+.rating-good {
+    background-color: rgba(245, 158, 11, 0.3);
+    color: #fbbf24;
+}
+
+.rating-average {
+    background-color: rgba(249, 115, 22, 0.3);
+    color: #fb923c;
+}
+
+.rating-below-average {
+    background-color: rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .text-6xl {
+        font-size: 3rem;
+    }
+    
+    .text-2xl {
+        font-size: 1.5rem;
+    }
+    
+    #clickButton {
+        width: 280px;
+        height: 120px;
+        font-size: 1.125rem;
+    }
+    
+    .max-w-4xl {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .text-6xl {
+        font-size: 2.5rem;
+    }
+    
+    .text-2xl {
+        font-size: 1.25rem;
+    }
+    
+    #clickButton {
+        width: 240px;
+        height: 100px;
+        font-size: 1rem;
+    }
+    
+    .grid-cols-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
