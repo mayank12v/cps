@@ -39,46 +39,6 @@
             color: #6ee7b7 !important;
         }
 
-        /* Click area effects - NO MOVEMENT */
-        #clickArea {
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        #clickArea:hover {
-            box-shadow: 0 8px 32px rgba(34, 197, 94, 0.3);
-            border-color: rgb(34, 197, 94);
-        }
-
-        #clickArea:active {
-            /* Remove the scale transform to prevent movement */
-            box-shadow: 0 4px 16px rgba(34, 197, 94, 0.4);
-        }
-
-        #clickArea:disabled {
-            background: #4b5563 !important;
-            cursor: not-allowed !important;
-            opacity: 0.5 !important;
-        }
-
-        #clickArea:disabled:hover {
-            transform: none !important;
-            box-shadow: none !important;
-        }
-
-        /* Gradient text support for older browsers */
-        .gradient-text {
-            background: linear-gradient(to right, #a855f7, #c084fc, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            color: transparent;
-        }
-
         /* Performance rating colors */
         .rating-legendary {
             background-color: rgba(147, 51, 234, 0.3);
@@ -115,17 +75,17 @@
             .text-6xl {
                 font-size: 3rem;
             }
-            
+
             .text-2xl {
                 font-size: 1.5rem;
             }
-            
-            #clickArea {
+
+            #clickButton {
                 width: 320px;
                 height: 160px;
                 font-size: 1.125rem;
             }
-            
+
             .max-w-4xl {
                 max-width: 100%;
                 padding: 0 1rem;
@@ -136,20 +96,36 @@
             .text-6xl {
                 font-size: 2.5rem;
             }
-            
+
             .text-2xl {
                 font-size: 1.25rem;
             }
-            
-            #clickArea {
+
+            #clickButton {
                 width: 280px;
                 height: 140px;
                 font-size: 1rem;
             }
-            
+
             .grid-cols-3 {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
+        }
+
+        /* Fixed position for the click button */
+        #clickButtonContainer {
+            position: relative; /* Establish positioning context */
+            height: 200px; /* Adjust height as needed to accommodate the button */
+        }
+
+        #clickButton {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px; /* Adjust width as needed */
+            height: 150px; /* Adjust height as needed */
+            font-size: 2rem; /* Adjust font size as needed */
         }
     </style>
 </head>
@@ -196,7 +172,7 @@
                     </svg>
                 </div>
             </div>
-            
+
             <div class="bg-black/40 backdrop-blur-sm rounded-lg border border-green-800/30 p-6">
                 <div class="flex items-center justify-between">
                     <div>
@@ -209,7 +185,7 @@
                     </svg>
                 </div>
             </div>
-            
+
             <div class="bg-black/40 backdrop-blur-sm rounded-lg border border-green-800/30 p-6">
                 <div class="flex items-center justify-between">
                     <div>
@@ -268,9 +244,9 @@
                     </div>
                 </div>
 
-                <!-- Bigger Click Area - Rectangle -->
-                <div id="clickArea" class="w-96 h-40 mx-auto rounded-xl text-white font-bold text-xl transition-all border-2 border-green-500/50 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 shadow-lg shadow-green-500/20 flex items-center justify-center">
-                    <span id="clickAreaText">START TEST</span>
+                <!-- Click Button -->
+                <div id="clickButtonContainer">
+                    <button id="clickButton"></button>
                 </div>
 
                 <!-- Reset Button -->
@@ -287,7 +263,7 @@
         <!-- Results -->
         <div id="resultsSection" class="bg-black/40 backdrop-blur-sm rounded-lg border border-green-800/30 p-6 mb-6 hidden">
             <h2 class="text-2xl font-bold text-gray-200 mb-6 text-center">Test Results</h2>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="space-y-4">
                     <div class="flex justify-between items-center py-2 border-b border-gray-700">
@@ -307,7 +283,7 @@
                         <span class="font-semibold text-lg text-green-400" id="bestScoreResult">0.00</span>
                     </div>
                 </div>
-                
+
                 <div class="flex flex-col items-center justify-center">
                     <div id="performanceRatingResult" class="px-6 py-3 rounded-full bg-green-900/30 text-green-400 font-bold text-lg mb-4 border border-green-500/20">
                         Average
@@ -352,7 +328,7 @@
                 this.intervalRef = null;
                 this.cooldownRef = null;
                 this.clickHistory = [];
-                
+
                 this.initializeEventListeners();
                 this.updateDisplay();
             }
@@ -365,8 +341,8 @@
                     });
                 });
 
-                // Click area (instead of button)
-                document.getElementById('clickArea').addEventListener('click', () => {
+                // Click button
+                document.getElementById('clickButton').addEventListener('click', () => {
                     this.handleClick();
                 });
 
@@ -377,12 +353,12 @@
             }
 
             loadBestScore() {
-                // Use a simple variable instead of localStorage
-                return 0;
+                const saved = localStorage.getItem('bestCPS');
+                return saved ? parseFloat(saved) : 0;
             }
 
             saveBestScore() {
-                // No localStorage usage
+                localStorage.setItem('bestCPS', this.bestScore.toString());
             }
 
             playStartSound() {
@@ -390,16 +366,16 @@
                     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
                     const oscillator = audioContext.createOscillator();
                     const gainNode = audioContext.createGain();
-                    
+
                     oscillator.connect(gainNode);
                     gainNode.connect(audioContext.destination);
-                    
+
                     oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
                     oscillator.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.1);
-                    
+
                     gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
                     gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-                    
+
                     oscillator.start(audioContext.currentTime);
                     oscillator.stop(audioContext.currentTime + 0.1);
                 } catch (error) {
@@ -411,7 +387,7 @@
                 this.intervalRef = setInterval(() => {
                     this.timeLeft--;
                     this.updateDisplay();
-                    
+
                     if (this.timeLeft <= 0) {
                         this.finishTest();
                     }
@@ -422,11 +398,11 @@
                 this.cooldownTime = 3;
                 this.showBlinkingMessage = false;
                 this.updateDisplay();
-                
+
                 this.cooldownRef = setInterval(() => {
                     this.cooldownTime--;
                     this.updateDisplay();
-                    
+
                     if (this.cooldownTime <= 0) {
                         this.showBlinkingMessage = true;
                         clearInterval(this.cooldownRef);
@@ -437,14 +413,14 @@
 
             handleClick() {
                 if (this.isFinished && this.cooldownTime > 0) {
-                    return; // Disabled during cooldown
+                    return; // Button is disabled during cooldown
                 }
-                
+
                 if (this.isFinished && this.cooldownTime === 0) {
                     this.resetTest();
                     return;
                 }
-                
+
                 if (!this.isActive && this.timeLeft === this.selectedTime) {
                     // Start the test
                     this.playStartSound();
@@ -461,7 +437,7 @@
                     this.clickCount++;
                     this.clickHistory.push(Date.now());
                 }
-                
+
                 this.updateDisplay();
             }
 
@@ -469,21 +445,21 @@
                 this.isActive = false;
                 this.isFinished = true;
                 this.showResults = true;
-                
+
                 clearInterval(this.intervalRef);
-                
+
                 // Calculate CPS
                 this.cps = this.clickCount / this.selectedTime;
-                
+
                 // Update best score
                 if (this.cps > this.bestScore) {
                     this.bestScore = this.cps;
                     this.saveBestScore();
                 }
-                
+
                 // Start cooldown
                 this.startCooldown();
-                
+
                 this.updateDisplay();
             }
 
@@ -497,23 +473,23 @@
                 this.cooldownTime = 0;
                 this.showBlinkingMessage = false;
                 this.clickHistory = [];
-                
+
                 clearInterval(this.intervalRef);
                 clearInterval(this.cooldownRef);
-                
+
                 this.updateDisplay();
             }
 
             changeTime(time) {
                 this.selectedTime = time;
                 this.resetTest();
-                
+
                 // Update time button styles
                 document.querySelectorAll('.time-btn').forEach(btn => {
                     btn.classList.remove('active');
                     btn.className = 'time-btn p-3 rounded-lg border-2 transition-all border-gray-600 hover:border-gray-500 text-gray-300 hover:bg-gray-800/50';
                 });
-                
+
                 document.querySelector(`[data-time="${time}"]`).classList.add('active');
                 document.querySelector(`[data-time="${time}"]`).className = 'time-btn p-3 rounded-lg border-2 transition-all border-green-500 bg-green-500/20 text-green-300 active';
             }
@@ -530,81 +506,78 @@
             updateDisplay() {
                 // Update time left
                 document.getElementById('timeLeft').textContent = `${this.timeLeft}s`;
-                
+
                 // Update click count
                 document.getElementById('clickCount').textContent = this.clickCount;
-                
+
                 // Update best score
                 document.getElementById('bestScore').textContent = this.bestScore.toFixed(2);
-                
+
                 // Update states
                 document.getElementById('readyState').classList.toggle('hidden', this.isActive || this.isFinished);
                 document.getElementById('activeState').classList.toggle('hidden', !this.isActive);
                 document.getElementById('finishedState').classList.toggle('hidden', !this.isFinished);
                 document.getElementById('currentCPS').classList.toggle('hidden', !this.isActive);
                 document.getElementById('resultsSection').classList.toggle('hidden', !this.showResults);
-                
+
                 // Update current CPS during test
                 if (this.isActive) {
                     const currentCPS = this.clickCount / (this.selectedTime - this.timeLeft) || 0;
                     document.getElementById('currentCPSValue').textContent = currentCPS.toFixed(2);
                 }
-                
+
                 // Update finished state
                 if (this.isFinished) {
                     document.getElementById('finalCPS').textContent = this.cps.toFixed(2);
-                    
+
                     const performance = this.getPerformanceRating(this.cps);
                     const ratingElement = document.getElementById('performanceRating');
                     ratingElement.textContent = performance.text;
                     ratingElement.className = `px-4 py-2 rounded-full font-semibold text-sm inline-block ${performance.class}`;
-                    
+
                     // Update cooldown message
                     document.getElementById('cooldownMessage').classList.toggle('hidden', this.cooldownTime <= 0);
                     document.getElementById('cooldownTime').textContent = this.cooldownTime;
-                    
+
                     // Update blinking message
                     document.getElementById('blinkingMessage').classList.toggle('hidden', !this.showBlinkingMessage);
                 }
-                
-                // Update click area
-                const clickArea = document.getElementById('clickArea');
-                const clickAreaText = document.getElementById('clickAreaText');
-                
-                // Reset all classes
-                clickArea.className = 'w-96 h-40 mx-auto rounded-xl text-white font-bold text-xl transition-all border-2 border-green-500/50 shadow-lg shadow-green-500/20 flex items-center justify-center';
-                
+
+                // Update click button
+                const clickButton = document.getElementById('clickButton');
+                clickButton.disabled = this.isFinished && this.cooldownTime > 0;
+
                 let buttonText = 'START TEST';
-                let additionalClasses = '';
-                
+                let buttonClass = 'rounded-xl text-white font-bold text-2xl transition-all transform border-2 border-green-500/50 hover:shadow-xl hover:shadow-green-500/30';
+
                 if (this.isFinished && this.cooldownTime > 0) {
                     buttonText = `WAIT ${this.cooldownTime}S`;
-                    additionalClasses = ' bg-gray-600 cursor-not-allowed opacity-50';
+                    buttonClass += ' bg-gray-600 cursor-not-allowed opacity-50';
                 } else if (this.isActive) {
                     buttonText = 'CLICK!';
-                    additionalClasses = ' bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700';
+                    buttonClass += ' bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 active:scale-95 shadow-lg shadow-green-500/20';
                 } else if (this.isFinished) {
                     buttonText = 'CLICK TO RESTART';
-                    additionalClasses = ' bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800';
+                    buttonClass += ' bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 active:scale-95 shadow-lg shadow-blue-500/20';
                 } else {
-                    additionalClasses = ' bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800';
+                    buttonClass += ' bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 active:scale-95 shadow-lg shadow-green-500/20';
                 }
-                
-                clickArea.className += additionalClasses;
-                clickAreaText.textContent = buttonText;
-                
+
+                clickButton.textContent = buttonText;
+                clickButton.className = buttonClass;
+
                 // Update results section
                 if (this.showResults) {
                     document.getElementById('totalClicks').textContent = this.clickCount;
                     document.getElementById('testDuration').textContent = `${this.selectedTime}s`;
                     document.getElementById('yourCPS').textContent = this.cps.toFixed(2);
                     document.getElementById('bestScoreResult').textContent = this.bestScore.toFixed(2);
-                    
+
                     const performanceResult = this.getPerformanceRating(this.cps);
                     const ratingResultElement = document.getElementById('performanceRatingResult');
                     ratingResultElement.textContent = performanceResult.text;
                     ratingResultElement.className = `px-6 py-3 rounded-full font-bold text-lg mb-4 border border-green-500/20 ${performanceResult.class}`;
-                    
+
                     // Update performance bar
                     const percentage = Math.min((this.cps / 15) * 100, 100);
                     document.getElementById('performanceBar').style.width = `${percentage}%`;
