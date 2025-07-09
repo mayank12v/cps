@@ -70,6 +70,27 @@
             color: #fca5a5;
         }
 
+        /* Improved button container with better spacing */
+        #clickButtonContainer {
+            position: relative;
+            height: 300px; /* Increased height for better spacing */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 3rem 0; /* Added consistent top and bottom margin */
+        }
+
+        #clickButton {
+            width: 400px;
+            height: 150px;
+            font-size: 1.5rem;
+            border-radius: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            transform: none; /* Remove the translate transform */
+            position: relative; /* Changed from absolute */
+        }
+
         /* Responsive design */
         @media (max-width: 768px) {
             .text-6xl {
@@ -84,6 +105,11 @@
                 width: 320px;
                 height: 160px;
                 font-size: 1.125rem;
+            }
+
+            #clickButtonContainer {
+                height: 250px;
+                margin: 2rem 0;
             }
 
             .max-w-4xl {
@@ -107,25 +133,14 @@
                 font-size: 1rem;
             }
 
+            #clickButtonContainer {
+                height: 220px;
+                margin: 1.5rem 0;
+            }
+
             .grid-cols-3 {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
-        }
-
-        /* Fixed position for the click button */
-        #clickButtonContainer {
-            position: relative; /* Establish positioning context */
-            height: 200px; /* Adjust height as needed to accommodate the button */
-        }
-
-        #clickButton {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 700px; /* Adjust width as needed */
-            height: 250px; /* Adjust height as needed */
-            font-size: 2rem; /* Adjust font size as needed */
         }
     </style>
 </head>
@@ -244,9 +259,9 @@
                     </div>
                 </div>
 
-                <!-- Click Button -->
+                <!-- Click Button with improved spacing -->
                 <div id="clickButtonContainer">
-                    <button id="clickButton"></button>
+                    <button id="clickButton" class="border-2 border-green-500/50 hover:shadow-xl hover:shadow-green-500/30 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 active:scale-95 shadow-lg shadow-green-500/20 text-white">START TEST</button>
                 </div>
 
                 <!-- Reset Button -->
@@ -353,12 +368,13 @@
             }
 
             loadBestScore() {
-                const saved = localStorage.getItem('bestCPS');
-                return saved ? parseFloat(saved) : 0;
+                // Use a variable to store the best score instead of localStorage
+                return this.bestScoreStored || 0;
             }
 
             saveBestScore() {
-                localStorage.setItem('bestCPS', this.bestScore.toString());
+                // Store the best score in a variable
+                this.bestScoreStored = this.bestScore;
             }
 
             playStartSound() {
@@ -548,7 +564,7 @@
                 clickButton.disabled = this.isFinished && this.cooldownTime > 0;
 
                 let buttonText = 'START TEST';
-                let buttonClass = 'rounded-xl text-white font-bold text-2xl transition-all transform border-2 border-green-500/50 hover:shadow-xl hover:shadow-green-500/30';
+                let buttonClass = 'border-2 border-green-500/50 hover:shadow-xl hover:shadow-green-500/30 text-white transition-all';
 
                 if (this.isFinished && this.cooldownTime > 0) {
                     buttonText = `WAIT ${this.cooldownTime}S`;
