@@ -1,141 +1,168 @@
-/* Custom styles for CPS Test */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CPS Test - By Mayank Gaur</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-* {
-    font-family: 'Inter', sans-serif;
-}
+    * {
+      font-family: 'Inter', sans-serif;
+    }
 
-/* Custom animations */
-@keyframes pulse {
-    0%, 100% {
+    @keyframes pulse {
+      0%, 100% {
         opacity: 1;
-    }
-    50% {
+      }
+      50% {
         opacity: 0.5;
+      }
     }
-}
 
-.animate-pulse {
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-/* Button hover effects */
-.time-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.time-btn.active {
-    border-color: #10b981 !important;
-    background-color: rgba(16, 185, 129, 0.2) !important;
-    color: #6ee7b7 !important;
-}
-
-/* Click button effects */
-#clickButton {
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    transform: none !important;
-    width: 450px;
-    height: 200px;
-    font-size: 1.5rem;
-}
-
-#clickButton:active {
-    transform: none !important;
-}
-
-#clickButton:disabled {
-    background: #4b5563 !important;
-    cursor: not-allowed !important;
-    opacity: 0.5 !important;
-}
-
-#clickButton:disabled:hover {
-    transform: none !important;
-    box-shadow: none !important;
-}
-
-/* Gradient text support for older browsers */
-.gradient-text {
-    background: linear-gradient(to right, #a855f7, #c084fc, #a855f7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
-}
-
-/* Performance rating colors */
-.rating-legendary {
-    background-color: rgba(147, 51, 234, 0.3);
-    color: #c084fc;
-}
-
-.rating-excellent {
-    background-color: rgba(16, 185, 129, 0.3);
-    color: #6ee7b7;
-}
-
-.rating-very-good {
-    background-color: rgba(59, 130, 246, 0.3);
-    color: #93c5fd;
-}
-
-.rating-good {
-    background-color: rgba(245, 158, 11, 0.3);
-    color: #fbbf24;
-}
-
-.rating-average {
-    background-color: rgba(249, 115, 22, 0.3);
-    color: #fb923c;
-}
-
-.rating-below-average {
-    background-color: rgba(239, 68, 68, 0.3);
-    color: #fca5a5;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-    .text-6xl {
-        font-size: 3rem;
+    .animate-pulse {
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     }
-    
-    .text-2xl {
-        font-size: 1.5rem;
+
+    .time-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
-    
+
+    .time-btn.active {
+      border-color: #10b981 !important;
+      background-color: rgba(16, 185, 129, 0.2) !important;
+      color: #6ee7b7 !important;
+    }
+
     #clickButton {
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      transform: none !important;
+      width: 450px;
+      height: 200px;
+      font-size: 1.5rem;
+    }
+
+    #clickButton:active {
+      transform: none !important;
+    }
+
+    #clickButton:disabled {
+      background: #4b5563 !important;
+      cursor: not-allowed !important;
+      opacity: 0.5 !important;
+    }
+
+    #clickButton:disabled:hover {
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .gradient-text {
+      background: linear-gradient(to right, #a855f7, #c084fc, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .rating-legendary {
+      background-color: rgba(147, 51, 234, 0.3);
+      color: #c084fc;
+    }
+
+    .rating-excellent {
+      background-color: rgba(16, 185, 129, 0.3);
+      color: #6ee7b7;
+    }
+
+    .rating-very-good {
+      background-color: rgba(59, 130, 246, 0.3);
+      color: #93c5fd;
+    }
+
+    .rating-good {
+      background-color: rgba(245, 158, 11, 0.3);
+      color: #fbbf24;
+    }
+
+    .rating-average {
+      background-color: rgba(249, 115, 22, 0.3);
+      color: #fb923c;
+    }
+
+    .rating-below-average {
+      background-color: rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+    }
+
+    @media (max-width: 768px) {
+      #clickButton {
         width: 340px;
         height: 150px;
         font-size: 1.25rem;
+      }
     }
-    
-    .max-w-4xl {
-        max-width: 100%;
-        padding: 0 1rem;
-    }
-}
 
-@media (max-width: 480px) {
-    .text-6xl {
-        font-size: 2.5rem;
-    }
-    
-    .text-2xl {
-        font-size: 1.25rem;
-    }
-    
-    #clickButton {
+    @media (max-width: 480px) {
+      #clickButton {
         width: 280px;
         height: 120px;
         font-size: 1.125rem;
+      }
     }
-    
-    .grid-cols-3 {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-green-900 via-gray-900 to-black text-white">
+
+  <div class="text-center pt-8 pb-6">
+    <h1 class="text-6xl font-bold text-gray-200 mb-2">CPS TEST</h1>
+    <p class="text-2xl font-semibold italic bg-gradient-to-r from-purple-500 via-purple-400 to-purple-600 bg-clip-text text-transparent drop-shadow-lg">By Mayank Gaur</p>
+  </div>
+
+  <div class="max-w-4xl mx-auto px-4 pb-20">
+    <!-- Main Click Button -->
+    <div id="clickButton" class="mx-auto rounded-xl text-white font-bold transition-all border-2 border-green-500/50 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 shadow-lg shadow-green-500/20 flex items-center justify-center">
+      <span id="clickAreaText">START TEST</span>
+    </div>
+  </div>
+
+  <script>
+    class CPSTest {
+      constructor() {
+        this.isActive = false;
+        this.clickCount = 0;
+        this.startTime = null;
+
+        document.getElementById('clickButton').addEventListener('click', () => this.handleClick());
+        this.updateDisplay();
+      }
+
+      handleClick() {
+        if (!this.isActive) {
+          this.isActive = true;
+          this.clickCount = 1;
+          this.startTime = performance.now();
+          document.getElementById('clickAreaText').textContent = 'CLICK!';
+        } else {
+          this.clickCount++;
+        }
+        this.updateDisplay();
+      }
+
+      updateDisplay() {
+        document.getElementById('clickAreaText').textContent = this.isActive ? `Clicks: ${this.clickCount}` : 'START TEST';
+      }
     }
-}
+
+    document.addEventListener('DOMContentLoaded', () => {
+      new CPSTest();
+    });
+  </script>
+
+</body>
+</html>
